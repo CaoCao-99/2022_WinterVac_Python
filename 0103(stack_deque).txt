@@ -1,0 +1,29 @@
+BFS와 DFS는 가장 잘 알려진 탐색방법이다.
+그렇기에 알고리즘의 성질과 특성은 알고있다.
+하지만, 파이썬에서 BFS와 DFS를 사용하기 위해서는
+파이썬 라이브러리에 존재하는 Queue, Stack 등을 활용할 줄 알아야 한다.
+
+Queue : FIFO
+사용 방법
+{
+    from collections import deque
+
+    queue = deque()
+
+    queue.append(1)
+    queue.append(2)
+    queue.append(3)
+    queue.append(4)
+    queue.popleft() -> 1이 pop
+} 
+
+Stack : LIFO
+사용 방법
+{
+    stack = []
+    stack.append(1)
+    stack.append(2)
+    stack.append(3)
+    stack.append(4)
+    stack.pop() -> 4가 pop
+}
