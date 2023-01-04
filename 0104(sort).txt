@@ -1,0 +1,108 @@
+*정렬에 대해 까먹은 부분도 있기에 개념 정리 및 파이썬 특성을 이용한 정렬*
+
+1. 선택 정렬 : 가장 기본이 되는 정렬
+{
+    동작 원리 : 1~N 개의 숫자들을 돌며 가장 앞의 숫자와 비교하여 작으면 자리 교체 -> 이중 for문으로 반복
+    
+    시간 복잡도 : O(N^2)
+
+    구현(파이썬의 스왑 사용)
+    arr = [1, 2, 5, 3, 9, 4]
+    for i in range(len(arr)):
+        min_idx = i
+        for j in range(i+1, len(arr)):
+            if arr[min_idx] > arr[j]:
+                min_idx = j
+        arr[i], arr[min_idx] =  arr[min_idx], arr[i] # 파이썬의 스왑 기능(C언어인 경우에는 3줄)
+}
+
+2. 삽입 정렬 : 삽입 위치 결정하기
+{
+    동작 원리 : 1~N개의 데이터를 확인하여 각 데이터의 삽입 위치 결정 -> 이중 for문으로 반복
+    
+    시간 복잡도 : O(N^2)
+
+    구현
+    arr = [1, 2, 5, 3, 9, 4]
+    for i in range(1, len(arr)):
+        for j in range(i):
+            if arr[j] < arr[i]:
+                arr[i], arr[j] =  arr[j], arr[i] # 파이썬의 스왑 기능(C언어인 경우에는 3줄)
+                break
+}
+
+3. 퀵 정렬 : 기준 정렬 알고리즘
+{
+    동작 원리 :  기준 설정 -> 좌측(기준보다 큰 값 탐색), 우측(기준보다 작은 값 탐색) -> 좌우 교체 
+    *핵심 : 좌측의 idx > 우측의 idx(:== 엇갈린 경우) 기준과 우측에서 온 idx교체 후, 기준 idx의 좌, 우로 파티션을 나누어 정렬 시작(좌, 우측 모두 기준 설정 및 졍렬 시작)
+    재귀함수를 사용(좌, 우에서 반복 ... return(함수 종료 시점)을 잘 넣어주어야 한다.)
+    시간 복잡도 : O(NlogN)
+    구현1{
+        def quick_sort(arr, start, end):
+            if start == end: #원소가 1개인 경우 종료
+                return
+            pivot = start #기준 설정
+            left = start + 1
+            right = end
+            while left <= right: #엇갈리지 않은 경우
+                while left <= end and arr[left] < arr[pivot]:#좌측에서 우측으로 이동중
+                    left +=1 #계속하여 pivot보다 큰값을 갖고있는 idx 탐색
+                while right >=start and arr[right] > arr[pivot]:
+                    right -= 1 #계속하여 pivot보다 작은 값을 갖고있는 idx 탐색
+                if left > right: #엇갈린 경우(pivot과 left 교체)
+                    arr[pivot] , arr[right] = arr[lrighteft] , arr[pivot]
+                    quick_sort(arr, start, right-1)#좌측
+                    quick_sort(arr, right+1, end)#우측  
+                else:
+                    arr[left], arr[right] = arr[right], arr[left] 
+    }
+
+    구현2{#파이썬의 특징을 잘 사용하여 구현
+        def quick_sort(arr):
+            if(len(arr)==1):
+                return
+            pivot = arr[0]
+            tail = arr[1:] #(1~end) list
+            left_side = [x for x in tail if x < pivot]
+            right_side = [x for x in tail if x > pivot]
+
+            return quick_sort(left_side) + [pivot] + quick_sort(right_side)
+    }
+    
+}
+
+4. 계수 정렬 : 특정 조건이 부합시, 사용 가능한 알고리즘
+{
+    조건 : 모든 값이 양수인 경우, 가장 큰 데이터의 값과 작은 데이터의 차이가 1,000,000 이하인 경우
+
+    동작원리: 모든 데이터 값의 범위를 나타낼 수 있는 리스트 생성 -> 앞에서부터 돌며 해당 값 카운트
+
+    구현{
+        count = [0] * (max(arr)+ 1)
+        for i in range(len(arr)):
+            count[arr[i]] += 1
+
+        for i in range(len(count)):
+            for j in range(count[i]):
+                print(i, end = ' ')
+    }
+}
+
+파이썬 정렬 라이브러리{
+    1. sorted{
+        result = sorted(arr) # 정렬 완료
+        print(result) # 정렬된 arr 출력(리스트 형식으로 출력)
+    }
+
+    2. sort{
+        arr.sort()
+        print(arr) #정렬된 arr 출력
+    }
+
+    3. key값 활용{
+        arr = [('바나나', 2), ('사과', 10), ('딸기', 1)]
+        def setting(data):
+            return data[1] #1번째 원소 반환('바나나', 2) -> 2  반환
+        result = sorted(arr, key = setting)
+    }
+}
