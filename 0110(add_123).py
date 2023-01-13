@@ -9,6 +9,7 @@ def recursive(n):
         return recursive(n-2) + recursive(n-1) + recursive(n-3)
 
 N = int(input())
+
 for i in range(N):
     a = int(input())
     print(recursive(a))
