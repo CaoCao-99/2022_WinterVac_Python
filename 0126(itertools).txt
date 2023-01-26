@@ -1,0 +1,36 @@
+*리스트에 있는 값들의 조합 구하기*
+
+3가지의 방법
+
+1. product
+{
+    사용 시기 : 2개 이상의 리스트의 모든 조합 구하는 경우
+
+    사용 방법 : from itertools import product
+
+    예시) list2 = [[1,2,3,4,5], ['a','v','c']]
+    print(list(product(*list2)))
+    -> [(1,'a'), (1,'v'), ...] 모든 조합 생성   
+}
+
+2. permutations
+{
+    사용 시기 : 하나의 리스트에서 내부의 조합 구하는 경우
+
+    사용 방법 : from itertools import permutations
+
+    list2 = [1,2,3,4,5]
+
+    print(list(permutations(list2, 2))) -> [(1,2) , (1,3) .. (4,5)]
+}
+
+3. combinations
+{
+    사용 시기 : 하나의 리스트에서 내부의 조합 구하는 경우
+
+    사용 방법 : from itertools import combinations
+
+    list2 = [1,2,3,4,5]
+
+    print(list(permutations(list2, 2))) -> [(1,2) , (1,3) .. (4,5)]
+}
